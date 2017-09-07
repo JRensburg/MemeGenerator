@@ -24,9 +24,7 @@ class MayMayViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     func doTheThing(){
-        //var textfield="Failure"
         var request = URLRequest(url: URL(string: "https://api.imgflip.com/caption_image")!)
-        //let params = ["template_id":"61579","username":"maymays","password":"maymays","text0":"Memes","text1":"Hard"] as Dictionary<String,String>
         request.httpMethod = "POST"
         let postString:String = makeString(id: info.2,text0: info.0,text1: info.1)
         
@@ -46,7 +44,6 @@ class MayMayViewController: UIViewController {
                 let responseString = String(data: data, encoding: .utf8)
                 print("responseString = \(responseString!)")
                 if parseData["success"] as! Bool {
-                    //self.changeText()
                     let theData = parseData["data"] as? [String:Any]
                     if let img = theData?["url"] as? String{
                         if let checkedUrl = URL(string: img) {
@@ -72,7 +69,6 @@ class MayMayViewController: UIViewController {
     func downloadImage(url: URL) {
         getDataFromUrl(url: url) { (data, response, error)  in
             guard let data = data, error == nil else { return }
-            //print(response?.suggestedFilename ?? url.lastPathComponent)
             DispatchQueue.main.async() { () -> Void in
                 let img = UIImage(data:data)
                 let imgSize:CGSize = img!.size
@@ -83,7 +79,6 @@ class MayMayViewController: UIViewController {
                 let newImage = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 self.mayMay.image = newImage!
-                //self.mayMay.frame = CGRect(origin: CGPoint(x:0,y:0), size: imgSize)
                 self.mayMay.center = self.view.center
             
             }
